@@ -1,0 +1,32 @@
+body{
+    margin: 0;
+    padding: 0;
+    color: white;
+    background-image: url("../img/i612620.webp");
+    font-family: Times, serif;
+}
+
+body > div {
+    margin: 135px 0px 20px 115px;
+    background-color: rgb(39, 36, 36) ; 
+    border: 15px solid orange;
+    border-radius: 50px;
+
+    font-size: 40px;
+
+    text-align: center;
+    width: 465px;
+
+    box-shadow: 30px 20px blur;
+}
+
+body > div > div{
+    padding: 25px;
+    margin-top: 0;
+}
+
+h2 {
+    font-size: 50px;
+}
+
+/*asds*/
