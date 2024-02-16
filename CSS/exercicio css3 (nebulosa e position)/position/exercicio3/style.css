@@ -3,18 +3,34 @@
 Use um deslocamento de 15px em relação à posição indicada em cada botão, para que eles não fiquem colados nas bordas.
 */
 
+*{
+  margin: 0;
+}
 .floating-btn {
   width: 130px;
   height: 130px;
   border-radius: 50%;
   font-size: 20px;
+  display: block;
+  position: relative;
 }
 .b1 {
-  
+  top: 15px;
+  left: 15px;
+  position: absolute;
 }
 .b2 {
+  top: 15px;
+  right: 15px;
+  position: absolute;
 }
 .b3 {
+  bottom: 15px;
+  left: 15px;
+  position: absolute;
 }
 .b4 {
+  bottom: 15px;
+  right: 15px;
+  position: absolute;
 }
