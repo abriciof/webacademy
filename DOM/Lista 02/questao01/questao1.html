@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Várias listas</title>
+</head>
+<body>
+    <h1>Várias listas</h1>
+  
+    <div>
+      <p id="lista-titulo" name="lista">Lista de itens:</p>
+    </div>
+  
+    <ul id="lista-itens-1">
+      <li id="one" class="hot">item a</li>
+      <li id="two" class="hot">item b</li>
+      <li id="three" class="hot">item c</li>
+      <li id="four">item d</li>
+    </ul>
+    
+    <script>
+        const lista = document.getElementsByTagName('ul')[0];
+        const firstItem = lista.firstElementChild; 
+        const lastItem = lista.lastElementChild;
+        const parent = lista.parentElement;
+        const childs = lista.childNodes;
+        
+        const two = document.getElementById('two');
+        const prevItem = two.previousElementSibling;
+        const nextItem = two.nextElementSibling;
+
+        console.log(firstItem)
+        console.log(lastItem)
+        console.log(parent)
+        console.log(childs)
+        console.log(prevItem)
+        console.log(nextItem)
+        
+    </script>
+  </body>
+</html>

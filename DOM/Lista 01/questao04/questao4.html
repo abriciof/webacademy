@@ -33,8 +33,13 @@
 
     <script>
         const lista2 = document.querySelectorAll('.lista-itens-2 li');
-        lista2.forEach(element => {
-            console.log(element);
-        });
+        for (let i = 0; i < lista2.length; i++){
+          console.log(lista2.item(i));
+        }
+
+        const lista2_hot = document.querySelectorAll('.lista-itens-2 li.hot');
+        for (let i = 0; i < lista2_hot.length; i++){
+          console.log(lista2_hot.item(i));
+        }
     </script>
   </body>

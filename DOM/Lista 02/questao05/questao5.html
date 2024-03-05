@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To-do</title>
+</head>
+<body>
+    <h1>To-do</h1>
+  
+    <div>
+      <p id="lista-titulo" name="lista">Lista de atividades:</p>
+    </div>
+  
+    <div>
+      <input placeholder="Digite aqui o item" />
+      <button>Adicionar</button>
+    </div>
+  
+    <ul id="lista-itens">
+      <li>item a</li>
+    </ul>
+  
+    <div>
+      <button>Remover último item</button>
+    </div>
+    <script>
+        const input = document.getElementsByTagName('input')[0];
+        const lista = document.getElementById('lista-itens');
+        const botoes= document.getElementsByTagName('button');
+        
+        function addToDo(){
+          let texto =  input.value;
+          if (texto != ''){
+            let item = document.createElement('li');
+            let conteudo = document.createTextNode(texto);
+            item.appendChild(conteudo);
+            lista.appendChild(item);
+          }else{
+            window.alert('Adicione um texto')
+          }
+
+          if (lista.childElementCount > 1){
+            botoes[1].disable = false;     
+          }
+        }
+
+        function removeToDo(){
+          if (lista.childElementCount > 1){
+            let removido = lista.lastElementChild;
+            lista.removeChild(removido);
+          }else{
+            botoes[1].disable = true;     
+          }
+        }
+
+        botoes[0].addEventListener('click', addToDo);
+        botoes[1].addEventListener('click', removeToDo);
+    </script>
+</body>
+</html>
