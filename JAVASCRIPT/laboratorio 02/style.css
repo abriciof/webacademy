@@ -41,11 +41,11 @@ button {
   height: 96px;
   float: left;
   cursor: pointer;
-  object-fit: cover; /* A imagem será cortada para preencher o espaço */
+  object-fit: cover; 
 }
 
 .displayed-img {
-  width: 640px;   /* A largura desejada */
-  height: 480px;  /* A altura desejada */
-  object-fit: cover; /* A imagem será cortada para preencher o espaço */
+  width: 640px;   
+  height: 480px;  
+  object-fit: cover;
 }
