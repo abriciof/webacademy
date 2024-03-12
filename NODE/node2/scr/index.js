@@ -1,7 +1,7 @@
-const http = require('http');
-const fs = require('fs');
-const dotenv = require('dotenv');
-const links = require('./utils/links');
+import http from 'http';
+import fs from 'fs';
+import dotenv from 'dotenv';
+import { createLink } from './utils/links.mjs';
 
 // Lendo do .env
 const NODE_ENV = process.env.NODE_ENV;
@@ -18,8 +18,9 @@ console.log(NODE_ENV);
 console.log(caminho_env_linux);
 console.log(PORT);
 
+
 // Lendo dos argumentos
-const diretorio = process.argv[2];
+let diretorio = "scr/"+process.argv[2];
 
 // Servidor que lista arquivos (Parte 1)
 const server = http.createServer((req, res) => {
@@ -36,7 +37,8 @@ const server = http.createServer((req, res) => {
                 }else{
                     res.write('<ul>');
                     arquivos.forEach(arquivo => {
-                        res.write(`<li>${links(arquivo)}</li>`);
+                        res.write(`<li>${createLink(arquivo)}</li>`);
+                        //res.write(links(arquivo))
                     });
                     res.write('</ul>');
                 }
@@ -49,7 +51,8 @@ const server = http.createServer((req, res) => {
     }else if (req.url.includes('favicon')){
         res.end();
     }else{
-        let arquivo = `${__dirname}/../${diretorio}${req.url}`;
+        let arquivo = `${diretorio}${req.url}`;
+        console.log(arquivo);
         fs.readFile(arquivo, (err, data) => {
             if (err) throw new Error(err);
             res.write("<a href='/'>Voltar</a><br>");
