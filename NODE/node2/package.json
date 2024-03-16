@@ -5,13 +5,13 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "NODE_ENV=development npx nodemon scr/index.js arquivos",
-    "start:windows": "NODE_ENV=development npx nodemon .\\index.js .\\arquivos\\",
-    "start:prod": "NODE_ENV=production node scr/index.js arquivos",
+    "start": "NODE_ENV=development npx nodemon src/index.js arquivos",
+    "start:windows": "set NODE_ENV=development & npx nodemon src/index.js arquivos",
+    "start:prod": "NODE_ENV=production node src/index.js arquivos",
     "start:prod:windows": "NODE_ENV=production node .\\index.js .\\arquivos\\"
   },
   "keywords": [],
-  "author": "",
+  "author": "Fabrício Guimarães",
   "license": "ISC",
   "dependencies": {
     "dotenv": "^16.4.5",

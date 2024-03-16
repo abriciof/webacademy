@@ -9,7 +9,7 @@
     "start:prod": "NODE_ENV=production node .\\index.js .\\arquivos\\"
   },
   "keywords": [],
-  "author": "",
+  "author": "Fabrício Guimarães",
   "license": "ISC",
   "dependencies": {
     "dotenv": "^16.4.5",

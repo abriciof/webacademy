@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gerador de Loren Ipsum</title>
+    <style>
+        .conteudo{
+            display: flex; 
+            flex-direction: column;
+            justify-content: center; align-items: center; 
+        }
+        .tela{
+            width: 50vw;
+        }
+        .resultado{
+            text-align: justify;
+        }
+    </style>
+</head>
+<body>
+    <div class="conteudo">
+        <h1> Gerado de Loren Ipsum</h1>
+        <form class="tela" action="/resultado">
+            <fieldset >
+                <legend>Insira a quantidade de parágrafos para gerar</legend>
+                <label>Quantidade de Parágrafos</label>
+                <input type="number" name="quantidade" min="1" step="1">
+                <input type="submit" value="Gerar Loren Ipsum">
+            </fieldset>
+        </form>
+        <div class="resultado tela">
+            {{resultado}}
+        </div>
+    </div>
+</body>
+</html>
