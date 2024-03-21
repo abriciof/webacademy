@@ -25,4 +25,3 @@ app.post("/", (req, res) => {
 app.listen(PORT, () => {
     console.log(`Express rodando na porta ${PORT}. NODE_ENV: ${NODE_ENV}`);
 });
-
