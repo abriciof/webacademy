@@ -4,8 +4,82 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TODO List - Fabrício Guimarães</title>
+    <style>
+
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0;
+            background-color: rgba(100, 100, 255, 0.4);
+        }
+
+
+        .container{
+            width: 40vw;
+            display: flex;
+            flex-direction: column;
+            flex-wrap: wrap;
+            text-align: start;
+            justify-content: center;
+        }
+
+
+        table {
+            width: 100%;
+            margin-top: 20px;
+            table-layout: fixed;
+            border-collapse: collapse;
+        }
+
+        table, th, td {
+            border: 1px solid black;
+        }
+
+        th, td {
+            padding: 10px;
+        }
+        .addbtn{
+            background-color: rgba(100, 100, 255, 0.9);
+        }
+    </style>
 </head>
 <body>
-    
+    <div class="container">
+        <h1> To do List - Fabrício Guimarães </h1>
+        
+        
+        <label for="descricao">Nome da tarefa:</label>
+        <input type="text" id="descricao" placeholder="Descrição da tarefa">
+        <br>   
+        <label for="prioridade">Prioridade da tarefa:</label>
+        <select id="prioridade">
+            <option value="Prioridade Baixa">Prioridade Baixa</option>
+            <option value="Prioridade Alta">Prioridade Alta</option>
+            <option value="Prioridade Crítica">Prioridade Crítica</option>
+        </select>
+        <br>
+        <label for="data">Data de entrega:</label>
+        <input type="date" id="data">
+        <br>
+
+        <button class="addbtn" onclick="botaoAdd()"><strong>Adicionar nova tarefa</strong></button>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Descrição</th>
+                    <th>Prioridade</th>
+                    <th>Data de Entrega</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody id="conteudoTabela">
+            </tbody>
+        </table>
+    </div>
+
+    <script src="js/main.js"></script>
 </body>
 </html>

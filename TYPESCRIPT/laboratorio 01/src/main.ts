@@ -4,12 +4,14 @@ class Tarefa {
 
     constructor(
         private descricao: string,
-        private status: boolean,
-        private dataCriacao: Date,
+        private prioridade: string,
+        private dataCriacao?: Date,
     ) {
         this.setDescricao(descricao);
-        this.setStatus(status);
-        this.setDataCriacao(dataCriacao);
+        this.setPrioridade(prioridade);
+        if (dataCriacao){
+            this.setDataCriacao(dataCriacao);
+        }
         this.id = ++Tarefa.count;
     }
 
@@ -21,11 +23,11 @@ class Tarefa {
         return this.descricao;
     }
 
-    public getStatus(): boolean {
-        return this.status;
+    public getPrioridade(): string {
+        return this.prioridade;
     }
 
-    public getDataCriacao(): Date {
+    public getDataCriacao(): Date | undefined {
         return this.dataCriacao;
     }
 
@@ -33,20 +35,16 @@ class Tarefa {
         this.descricao = novaDescricao;
     }
 
-    public setStatus(novoStatus: boolean): void {
-        this.status = novoStatus;
+    public setPrioridade(novaPrioridade: string): void {
+        this.prioridade = novaPrioridade;
     }
 
     public setDataCriacao(novaDataCriacao: Date): void {
         this.dataCriacao = novaDataCriacao;
     }
 }
-
-
 class TODO {
-    constructor(
-        private lista: Tarefa[]
-    ){
+    constructor(private lista: Tarefa[]){
         this.criaLista(lista);
     }
 
@@ -58,32 +56,97 @@ class TODO {
         this.lista.push(tarefa);
     }
 
-    public renderLista(): [number, string, boolean, Date]{
-        let tupla: [number, string, boolean, Date] = [this.lista[0].getId(), this.lista[0].getDescricao(), this.lista[0].getStatus(), this.lista[0].getDataCriacao()];
-        for (var index = 1; index<this.lista.length; index++){
-            tupla.push(this.lista[index].getId(), this.lista[index].getDescricao(), this.lista[index].getStatus(), this.lista[index].getDataCriacao());
-        }
-        return tupla
+    public removeTarefa(id: number): void {
+        this.lista = this.lista.filter(tarefa => tarefa.getId() !== id);
     }
 
+    public getLista(): Tarefa[] {
+        return this.lista
+    }
+
+    public gerarTableHTML(): void{
+        let listaTarefas = this.getLista();
+
+        const tableBody: HTMLElement = document.getElementById("conteudoTabela") as HTMLElement;
+        if (tableBody){
+            tableBody.innerHTML = "";
+        }
+
+        listaTarefas.forEach(tarefa => {
+            const row = document.createElement('tr');
+            if (tarefa && tableBody){
+                let dataAtual : Date | undefined = tarefa.getDataCriacao();
+                let dataStr: string = "";
+                if (dataAtual){
+                    dataStr += dataAtual.toLocaleDateString();
+                }
+                row.innerHTML = `
+                    <td> ${tarefa.id} </td>
+                    <td> ${tarefa.getDescricao()} </td>
+                    <td> ${tarefa.getPrioridade()} </td>
+                    <td> ${dataStr}</td>
+                    <td><button onclick="botaoRemover(${tarefa.id})"> Remover </button></td>
+                `;
+    
+                tableBody.appendChild(row);
+            }
+        });
+    }
+}
+
+function botaoAdd(): void {
+    const mensagemAlerta = "A descrição e a prioridade são parâmetros obrigatórios!";
+
+    let descricaoInput : HTMLInputElement = document.getElementById("descricao") as HTMLInputElement;
+    let prioridadeInput: HTMLInputElement = document.getElementById("prioridade") as HTMLInputElement;
+    let dataInput: HTMLInputElement = document.getElementById("data") as HTMLInputElement;
+    if (descricaoInput && prioridadeInput){
+        let descricao = descricaoInput.value;
+        let prioridade = prioridadeInput.value;
+        
+        if (!descricao || !prioridade) {
+            alert(mensagemAlerta);
+        }else{
+            let tarefa = new Tarefa(descricao, prioridade);
+            if (dataInput) {
+                if (dataInput.value){
+                    let data = dataInput.value.split('-');
+                    let ano: number = parseInt(data[0]);
+                    let mes: number = parseInt(data[1]);
+                    let dia: number = parseInt(data[2]);
+                    const novaData: Date = new Date(ano,mes,dia);
+                    tarefa.setDataCriacao(novaData);
+                }
+            }
+
+            todoList.addTarefa(tarefa);
+            todoList.gerarTableHTML();
+        }
+    }else {
+        alert(mensagemAlerta);
+    }
+    descricaoInput.value = "";
+    prioridadeInput.value = "";
+    dataInput.value = "";
 }
 
 
-const data1: Date = new Date(2024, 3 ,22);
-const task1: Tarefa = new Tarefa("Arrumar quarto", false, data1);
+function botaoRemover(id: number){
+    todoList.removeTarefa(id);
+    todoList.gerarTableHTML();
+}
+
+// Tasks iniciais
+const data1: Date = new Date(2024, 3 ,23);
+const task1: Tarefa = new Tarefa("Atividade de TypeScript", "Prioridade Alta", data1);
 
 
-const data2: Date = new Date(2024, 3 ,22);
-const task2: Tarefa = new Tarefa("Arrumar sala", false, data2);
-const data3: Date = new Date(2024, 3 ,22);
-const task3: Tarefa = new Tarefa("Arrumar banheiro", false, data3);
-const data4: Date = new Date(2024, 3 ,22);
-const task4: Tarefa = new Tarefa("Arrumar cozinha", false, data4);
+// const data2: Date = new Date(2024, 3 ,25);
+const data2 = undefined;
+const task2: Tarefa = new Tarefa("Atividade de Express", "Prioridade Baixa", data2);
 
 const todoList: TODO = new TODO([]);
 todoList.addTarefa(task1);
 todoList.addTarefa(task2);
-todoList.addTarefa(task3);
-todoList.addTarefa(task4);
 
-console.log(todoList.renderLista());
+todoList.gerarTableHTML();
