@@ -115,7 +115,7 @@ function botaoAdd(): void {
                     if (dataInput.value){
                         let data = dataInput.value.split('-');
                         let ano: number = parseInt(data[0]);
-                        let mes: number = parseInt(data[1]);
+                        let mes: number = parseInt(data[1]) - 1;
                         let dia: number = parseInt(data[2]);
                         const novaData: Date = new Date(ano,mes,dia);
                         tarefa.setDataCriacao(novaData);
@@ -141,7 +141,7 @@ function botaoRemover(id: number){
 }
 
 // Tasks iniciais
-const data1: Date = new Date(2024, 3 ,23);
+const data1: Date = new Date(2024, 3-1 ,23);
 const task1: Tarefa = new Tarefa("Atividade de TypeScript", "Prioridade Alta", data1);
 
 const data2 = undefined;
