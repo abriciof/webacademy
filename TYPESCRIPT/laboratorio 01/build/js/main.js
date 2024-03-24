@@ -1,15 +1,21 @@
 "use strict";
 class Tarefa {
-    constructor(descricao, prioridade, dataCriacao) {
+    constructor(descricao, prioridade, dataCriacao, id) {
         this.descricao = descricao;
         this.prioridade = prioridade;
         this.dataCriacao = dataCriacao;
+        this.id = id;
         this.setDescricao(descricao);
         this.setPrioridade(prioridade);
         if (dataCriacao) {
             this.setDataCriacao(dataCriacao);
         }
-        this.id = ++Tarefa.count;
+        if (id) {
+            this.setId(id);
+        }
+        else {
+            this.setId(++Tarefa.count);
+        }
     }
     getId() {
         return this.id;
@@ -22,6 +28,9 @@ class Tarefa {
     }
     getDataCriacao() {
         return this.dataCriacao;
+    }
+    setId(novoId) {
+        this.id = novoId;
     }
     setDescricao(novaDescricao) {
         this.descricao = novaDescricao;
@@ -67,11 +76,11 @@ class TODO {
                         dataStr += dataAtual.toLocaleDateString();
                     }
                     row.innerHTML = `
-                        <td> ${tarefa.id} </td>
+                        <td> ${tarefa.getId()} </td>
                         <td> ${tarefa.getDescricao()} </td>
                         <td> ${tarefa.getPrioridade()} </td>
                         <td> ${dataStr}</td>
-                        <td><button onclick="botaoRemover(${tarefa.id})"> Remover </button></td>
+                        <td><button onclick="botaoRemover(${tarefa.getId()})"> Remover </button></td>
                     `;
                     tableBody.appendChild(row);
                 }

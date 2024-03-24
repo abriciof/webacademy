@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Turma de Educação Física</title>
+    <style>
+
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0;
+            background-color: rgba(100, 100, 255, 0.4);
+        }
+
+
+        .container{
+            width: 60vw;
+            display: flex;
+            flex-direction: column;
+            flex-wrap: wrap;
+            text-align: start;
+            justify-content: center;
+        }
+
+
+        table {
+            width: 100%;
+            margin-top: 20px;
+            table-layout: fixed;
+            border-collapse: collapse;
+        }
+
+        table, th, td {
+            border: 1px solid black;
+            text-align: center;
+            background-color:aliceblue;
+            margin-bottom: 40px;
+        }
+
+        th, td {
+            padding: 10px;
+        }
+
+        .entradas{
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding: 8px;
+        }
+
+        .entradas > input, .entradas > .colunas > .col1 > input {
+            padding: 5px;
+        }
+
+        .entradas > label, .entradas > .colunas > .col1 > label {
+            font-weight: bold;
+        }
+
+        .botoes{
+            margin-top: 8px;
+            display: flex;
+            flex-direction: row;
+            gap: 10px;
+            flex-wrap: nowrap;
+            justify-content: center;
+            margin-bottom: 8px;
+        }
+
+        .botoes > .ubutton{
+            background-color: rgba(100, 100, 255, 0.9);
+            color: aliceblue;
+            border: none;
+            padding: 2px;
+            border-radius: 10px;
+            width: 32%;
+        }
+
+        .colunas{
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between  ;
+        }
+
+        .col1{
+            display: flex;
+            flex-direction: column;
+            width: 32%;
+        }
+
+        </style>
+</head>
+<body>
+    <div class="container">
+        <h1> Gerenciamento de Turmas de Educação Física </h1>
+        
+        <div class="entradas">
+            <label for="nome">Nome do aluno:</label>
+            <input type="text" id="nome" placeholder="Nome completo do aluno:">
+            <br>   
+            <div class="colunas">
+                <div class="col1">
+                    <label for="idade">Idade:</label>
+                    <input type="number" id="idade" step="1" min="0" value="0">
+                </div>
+                <div class="col1">
+                    <label for="altura">Altura:</label>
+                    <input type="number" id="altura" step="0.1" min="0.0" value="0.0">
+                </div>
+                <div class="col1">
+                    <label for="peso">Peso:</label>
+                <input type="number" id="peso" step="0.1" min="0.0" value="0.0">
+                </div>                
+            </div>
+        </div>
+            
+        <div class="botoes">
+            <button class="" id="salvar" onclick="botaoAdd()" ><strong>Salvar novo aluno</strong></button>
+            <button class="" id="salvarEdicao" onclick="botaoSalvar()" disabled><strong>Salvar edição de aluno</strong></button>
+            <button class="" id="cancelarEdicao" onclick="botaoCancelar()" disabled><strong>Cancelar edição de aluno</strong></button>
+        </div>
+
+        <div class="tabela">
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nome Completo</th>
+                        <th>Idade</th>
+                        <th>Altura (m)</th>
+                        <th>Peso (kg)</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody id="conteudoTabela">
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script src="js/main.js"></script>
+</body>
+</html>

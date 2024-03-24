@@ -1,21 +1,25 @@
 class Tarefa {
     static count: number = 0;
-    public id: number;
 
     constructor(
         private descricao: string,
         private prioridade: string,
         private dataCriacao?: Date,
+        private id?: number
     ) {
         this.setDescricao(descricao);
         this.setPrioridade(prioridade);
         if (dataCriacao){
             this.setDataCriacao(dataCriacao);
         }
-        this.id = ++Tarefa.count;
+        if (id){
+            this.setId(id);
+        }else{
+            this.setId(++Tarefa.count);
+        }
     }
 
-    public getId(): number {
+    public getId(): number | undefined {
         return this.id;
     }
 
@@ -29,6 +33,10 @@ class Tarefa {
 
     public getDataCriacao(): Date | undefined {
         return this.dataCriacao;
+    }
+
+    public setId(novoId: number): void {
+        this.id = novoId;
     }
 
     public setDescricao(novaDescricao: string): void {
@@ -83,11 +91,11 @@ class TODO {
                         dataStr += dataAtual.toLocaleDateString();
                     }
                     row.innerHTML = `
-                        <td> ${tarefa.id} </td>
+                        <td> ${tarefa.getId()} </td>
                         <td> ${tarefa.getDescricao()} </td>
                         <td> ${tarefa.getPrioridade()} </td>
                         <td> ${dataStr}</td>
-                        <td><button onclick="botaoRemover(${tarefa.id})"> Remover </button></td>
+                        <td><button onclick="botaoRemover(${tarefa.getId()})"> Remover </button></td>
                     `;
         
                     tableBody.appendChild(row);
@@ -133,7 +141,6 @@ function botaoAdd(): void {
         dataInput.value = "";
     }
 }
-
 
 function botaoRemover(id: number){
     todoList.removeTarefa(id);
