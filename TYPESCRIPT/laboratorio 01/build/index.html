@@ -16,7 +16,7 @@
 
 
         .container{
-            width: 40vw;
+            width: 60vw;
             display: flex;
             flex-direction: column;
             flex-wrap: wrap;
@@ -49,8 +49,8 @@
         <h1> To do List - Fabrício Guimarães </h1>
         
         
-        <label for="descricao">Nome da tarefa:</label>
-        <input type="text" id="descricao" placeholder="Descrição da tarefa">
+        <label for="titulo">Título da tarefa:</label>
+        <input type="text" id="titulo" placeholder="Título da tarefa">
         <br>   
         <label for="prioridade">Prioridade da tarefa:</label>
         <select id="prioridade">
@@ -59,8 +59,12 @@
             <option value="Prioridade Crítica">Prioridade Crítica</option>
         </select>
         <br>
+        <label for="descricao">Descrição da tarefa:</label>
+        <input type="text" id="descricao" placeholder="Descrição da tarefa">
+        <br>
         <label for="data">Data de entrega:</label>
         <input type="date" id="data">
+        
         <br>
 
         <button class="addbtn" onclick="botaoAdd()"><strong>Adicionar nova tarefa</strong></button>
@@ -69,8 +73,10 @@
             <thead>
                 <tr>
                     <th>ID</th>
-                    <th>Descrição</th>
+                    <th>Título</th>
+                    <th>Data de Criação</th>
                     <th>Prioridade</th>
+                    <th>Descrição</th>
                     <th>Data de Entrega</th>
                     <th></th>
                 </tr>
