@@ -193,7 +193,7 @@ function botaoEditar(id) {
         descricaoInput.value = tarefa.getDescricao() || '';
         let entrega = tarefa.getDataEntrega();
         if (entrega) {
-            console.log(entrega.toISOString());
+            // console.log(entrega.toISOString())
             let data = entrega.toISOString().substring(0, 10);
             console.log(data);
             dataInput.value = data;
@@ -211,7 +211,14 @@ function botaoSalvarEdicao(id) {
     const novoTitulo = tituloInput.value;
     const novaPrioridade = prioridadeSelect.value;
     const novaDescricao = descricaoInput.value;
-    const novaDataEntrega = dataInput.value ? new Date(dataInput.value) : undefined;
+    let novaDataEntrega;
+    if (dataInput.value) {
+        let data = dataInput.value.split('-');
+        let ano = parseInt(data[0]);
+        let mes = parseInt(data[1]) - 1;
+        let dia = parseInt(data[2]);
+        novaDataEntrega = new Date(ano, mes, dia);
+    }
     todoList.atualizarTarefa(id, novoTitulo, novaPrioridade, novaDescricao, novaDataEntrega);
     const botaoAdicionar = document.querySelector(".addbtn");
     botaoAdicionar.innerText = 'Adicionar nova tarefa';

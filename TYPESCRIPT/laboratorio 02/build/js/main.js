@@ -54,6 +54,33 @@ class Turma {
         this.lista = lista;
         this.criaLista(lista);
     }
+    getNumAlunos() {
+        return this.lista.length;
+    }
+    getMediaIdades() {
+        let qtde = this.getNumAlunos();
+        let soma = 0;
+        this.getLista().forEach(aluno => {
+            soma += aluno.getIdade();
+        });
+        return soma / qtde;
+    }
+    getMediaAlturas() {
+        let qtde = this.getNumAlunos();
+        let soma = 0;
+        this.getLista().forEach(aluno => {
+            soma += aluno.getAltura();
+        });
+        return soma / qtde;
+    }
+    getMediaPesos() {
+        let qtde = this.getNumAlunos();
+        let soma = 0;
+        this.getLista().forEach(aluno => {
+            soma += aluno.getPeso();
+        });
+        return soma / qtde;
+    }
     criaLista(novaLista) {
         this.lista = novaLista;
     }
@@ -91,8 +118,8 @@ class Turma {
                         <td> ${aluno.getId()} </td>
                         <td> ${aluno.getNomeCompleto()} </td>
                         <td> ${aluno.getIdade()} </td>
-                        <td> ${parseFloat(`${aluno.getAltura()}`)} </td>
-                        <td> ${parseFloat(`${aluno.getPeso()}`)} </td>
+                        <td> ${aluno.getAltura()} </td>
+                        <td> ${aluno.getPeso()} </td>
                         <td>
                         <button onclick="botaoRemover(${aluno.getId()})"> Remover </button>
                         <button onclick="botaoEditar(${aluno.getId()})"> Editar </button>
@@ -102,6 +129,12 @@ class Turma {
                 }
             });
         }
+        let estIdade = document.getElementById("estIdade");
+        let estPeso = document.getElementById("estPeso");
+        let estAltura = document.getElementById("estAltura");
+        estIdade.value = turma.getMediaIdades().toFixed(2).toString();
+        estPeso.value = turma.getMediaPesos().toFixed(2).toString();
+        estAltura.value = turma.getMediaAlturas().toFixed(2).toString();
     }
 }
 function botaoAdd() {
@@ -136,85 +169,66 @@ function botaoAdd() {
 }
 function botaoEditar(id) {
     const aluno = turma.getAlunoById(id);
-    const mensagemAlerta = "Erro ao carregar o DOM!";
-    if (typeof document !== 'undefined') {
+    if (aluno) {
         let nomeInput = document.getElementById("nome");
         let idadeInput = document.getElementById("idade");
         let alturaInput = document.getElementById("altura");
         let pesoInput = document.getElementById("peso");
-        nomeInput.value = `${aluno.getNomeCompleto()}`;
-        idadeInput.value = `${aluno.getIdade()}`;
-        alturaInput.value = `${aluno.getAltura()}`;
-        pesoInput.value = `${aluno.getPeso()}`;
-        const btnAdd = document.getElementById("salvar");
+        nomeInput.value = aluno.getNomeCompleto();
+        idadeInput.value = aluno.getIdade().toString();
+        alturaInput.value = aluno.getAltura().toString();
+        pesoInput.value = aluno.getPeso().toString();
         const btnSalvar = document.getElementById("salvarEdicao");
         const btnCancelar = document.getElementById("cancelarEdicao");
-        btnAdd.disabled = true;
         btnSalvar.disabled = false;
         btnCancelar.disabled = false;
+        btnSalvar.onclick = function () { botaoSalvar(id); }; // Atualiza a função onclick do botão Salvar para passar o ID
     }
-    else {
-        console.log(mensagemAlerta);
-        alert(mensagemAlerta);
-    }
+    const btnSalvar = document.getElementById("salvar");
+    const btnSalvarEdicao = document.getElementById("salvarEdicao");
+    const btnCancelar = document.getElementById("cancelarEdicao");
+    btnSalvar.disabled = true;
+    btnSalvarEdicao.disabled = false;
+    btnCancelar.disabled = false;
 }
 function botaoRemover(id) {
     turma.removeAluno(id);
     turma.gerarTableHTML();
 }
 function botaoCancelar() {
-    if (typeof document !== 'undefined') {
-        let nomeInput = document.getElementById("nome");
-        let idadeInput = document.getElementById("idade");
-        let alturaInput = document.getElementById("altura");
-        let pesoInput = document.getElementById("peso");
-        nomeInput.value = "";
-        idadeInput.value = "0";
-        alturaInput.value = "0.0";
-        pesoInput.value = "0.0";
-        const btnAdd = document.getElementById("salvar");
-        const btnSalvar = document.getElementById("salvarEdicao");
-        const btnCancelar = document.getElementById("cancelarEdicao");
-        btnAdd.disabled = false;
-        btnSalvar.disabled = true;
-        btnCancelar.disabled = true;
-    }
+    let nomeInput = document.getElementById("nome");
+    let idadeInput = document.getElementById("idade");
+    let alturaInput = document.getElementById("altura");
+    let pesoInput = document.getElementById("peso");
+    nomeInput.value = "";
+    idadeInput.value = "0";
+    alturaInput.value = "0.0";
+    pesoInput.value = "0.0";
+    const btnSalvar = document.getElementById("salvar");
+    const btnSalvarEdicao = document.getElementById("salvarEdicao");
+    const btnCancelar = document.getElementById("cancelarEdicao");
+    btnSalvar.disabled = false;
+    btnSalvarEdicao.disabled = true;
+    btnCancelar.disabled = true;
 }
-function botaoSalvar() {
-    const mensagemAlerta = "Preencha todos os parâmetros!";
-    if (typeof document !== 'undefined') {
-        let nomeInput = document.getElementById("nome");
-        let idadeInput = document.getElementById("idade");
-        let alturaInput = document.getElementById("altura");
-        let pesoInput = document.getElementById("peso");
-        if (nomeInput && idadeInput && alturaInput && pesoInput) {
-            let nome = nomeInput.value;
-            let idade = parseInt(idadeInput.value);
-            let altura = parseFloat(alturaInput.value);
-            let peso = parseFloat(pesoInput.value);
-            if (!nome || !idade || !altura || !peso) {
-                alert(mensagemAlerta);
-            }
-            else {
-                let aluno = new Aluno(nome, idade, altura, peso);
-                turma.addAluno(aluno);
-                turma.gerarTableHTML();
-            }
-        }
-        else {
-            alert(mensagemAlerta);
-        }
-        nomeInput.value = "";
-        idadeInput.value = "0";
-        alturaInput.value = "0.0";
-        pesoInput.value = "0.0";
-        const btnAdd = document.getElementById("salvar");
-        const btnSalvar = document.getElementById("salvarEdicao");
-        const btnCancelar = document.getElementById("cancelarEdicao");
-        btnAdd.disabled = false;
-        btnSalvar.disabled = true;
-        btnCancelar.disabled = true;
+function botaoSalvar(id) {
+    let nomeInput = document.getElementById("nome");
+    let idadeInput = document.getElementById("idade");
+    let alturaInput = document.getElementById("altura");
+    let pesoInput = document.getElementById("peso");
+    const nome = nomeInput.value;
+    const idade = parseInt(idadeInput.value);
+    const altura = parseFloat(alturaInput.value);
+    const peso = parseFloat(pesoInput.value);
+    const aluno = turma.getAlunoById(id);
+    if (aluno) {
+        aluno.setNomeCompleto(nome);
+        aluno.setIdade(idade);
+        aluno.setAltura(altura);
+        aluno.setPeso(peso);
+        turma.gerarTableHTML();
     }
+    botaoCancelar();
 }
 // Alunos iniciais
 const aluno1 = new Aluno("Maria da Silva", 11, 1.50, 35.2);

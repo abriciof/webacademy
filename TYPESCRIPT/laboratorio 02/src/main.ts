@@ -65,6 +65,38 @@ class Turma {
         this.criaLista(lista);
     }
 
+    public getNumAlunos(): number {
+        return this.lista.length;
+    }
+
+    public getMediaIdades(): number{
+        let qtde = this.getNumAlunos();
+        let soma = 0;
+        this.getLista().forEach(aluno => {
+            soma += aluno.getIdade();
+        });
+        return soma/qtde;
+    }
+
+    public getMediaAlturas(): number{
+        let qtde = this.getNumAlunos();
+        let soma = 0;
+        this.getLista().forEach(aluno => {
+            soma += aluno.getAltura();
+        });
+        return soma/qtde;
+
+    }
+
+    public getMediaPesos(): number{
+        let qtde = this.getNumAlunos();
+        let soma = 0;
+        this.getLista().forEach(aluno => {
+            soma += aluno.getPeso();
+        });
+        return soma/qtde;
+    }
+
     public criaLista(novaLista: Aluno[]){
         this.lista = novaLista;
     }
@@ -131,6 +163,13 @@ class Turma {
                 }
             });
         }
+        let estIdade : HTMLInputElement = document.getElementById("estIdade") as HTMLInputElement;
+        let estPeso: HTMLInputElement = document.getElementById("estPeso") as HTMLInputElement;
+        let estAltura: HTMLInputElement = document.getElementById("estAltura") as HTMLInputElement;
+
+        estIdade.value = turma.getMediaIdades().toFixed(2).toString();
+        estPeso.value = turma.getMediaPesos().toFixed(2).toString();
+        estAltura.value = turma.getMediaAlturas().toFixed(2).toString();
     }
 }
 
@@ -169,33 +208,34 @@ function botaoAdd(): void {
 
 function botaoEditar(id: number): void {
     const aluno: Aluno = turma.getAlunoById(id);
-    const mensagemAlerta: string = "Erro ao carregar o DOM!";
-
-    if (typeof document !== 'undefined') {
-        let nomeInput : HTMLInputElement = document.getElementById("nome") as HTMLInputElement;
+    if (aluno) {
+        let nomeInput: HTMLInputElement = document.getElementById("nome") as HTMLInputElement;
         let idadeInput: HTMLInputElement = document.getElementById("idade") as HTMLInputElement;
         let alturaInput: HTMLInputElement = document.getElementById("altura") as HTMLInputElement;
         let pesoInput: HTMLInputElement = document.getElementById("peso") as HTMLInputElement;
 
-        nomeInput.value = `${aluno.getNomeCompleto()}`;
-        idadeInput.value = `${aluno.getIdade()}`;
-        alturaInput.value = `${aluno.getAltura()}`;
-        pesoInput.value = `${aluno.getPeso()}`;
+        nomeInput.value = aluno.getNomeCompleto();
+        idadeInput.value = aluno.getIdade().toString();
+        alturaInput.value = aluno.getAltura().toString();
+        pesoInput.value = aluno.getPeso().toString();
 
-        const btnAdd: HTMLButtonElement = document.getElementById("salvar") as HTMLButtonElement;
         const btnSalvar: HTMLButtonElement = document.getElementById("salvarEdicao") as HTMLButtonElement;
         const btnCancelar: HTMLButtonElement = document.getElementById("cancelarEdicao") as HTMLButtonElement;
-
-        btnAdd.disabled = true;
-        btnSalvar.disabled = false; 
+        btnSalvar.disabled = false;
         btnCancelar.disabled = false;
 
-    }else{
-        console.log(mensagemAlerta);
-        alert(mensagemAlerta);
+        btnSalvar.onclick = function() { botaoSalvar(id); }; // Atualiza a função onclick do botão Salvar para passar o ID
     }
 
+    const btnSalvar: HTMLButtonElement = document.getElementById("salvar") as HTMLButtonElement;
+    const btnSalvarEdicao: HTMLButtonElement = document.getElementById("salvarEdicao") as HTMLButtonElement;
+    const btnCancelar: HTMLButtonElement = document.getElementById("cancelarEdicao") as HTMLButtonElement;
+
+    btnSalvar.disabled = true;
+    btnSalvarEdicao.disabled = false;
+    btnCancelar.disabled = false;
 }
+
 
 function botaoRemover(id: number): void {
     turma.removeAluno(id);
@@ -203,67 +243,49 @@ function botaoRemover(id: number): void {
 }
 
 function botaoCancelar(): void {
-    if (typeof document !== 'undefined') {
-        let nomeInput : HTMLInputElement = document.getElementById("nome") as HTMLInputElement;
-        let idadeInput: HTMLInputElement = document.getElementById("idade") as HTMLInputElement;
-        let alturaInput: HTMLInputElement = document.getElementById("altura") as HTMLInputElement;
-        let pesoInput: HTMLInputElement = document.getElementById("peso") as HTMLInputElement;
+    let nomeInput: HTMLInputElement = document.getElementById("nome") as HTMLInputElement;
+    let idadeInput: HTMLInputElement = document.getElementById("idade") as HTMLInputElement;
+    let alturaInput: HTMLInputElement = document.getElementById("altura") as HTMLInputElement;
+    let pesoInput: HTMLInputElement = document.getElementById("peso") as HTMLInputElement;
 
-        nomeInput.value = "";
-        idadeInput.value = "0";
-        alturaInput.value = "0.0";
-        pesoInput.value = "0.0";
+    nomeInput.value = "";
+    idadeInput.value = "0";
+    alturaInput.value = "0.0";
+    pesoInput.value = "0.0";
 
-        const btnAdd: HTMLButtonElement = document.getElementById("salvar") as HTMLButtonElement;
-        const btnSalvar: HTMLButtonElement = document.getElementById("salvarEdicao") as HTMLButtonElement;
-        const btnCancelar: HTMLButtonElement = document.getElementById("cancelarEdicao") as HTMLButtonElement;
+    const btnSalvar: HTMLButtonElement = document.getElementById("salvar") as HTMLButtonElement;
+    const btnSalvarEdicao: HTMLButtonElement = document.getElementById("salvarEdicao") as HTMLButtonElement;
+    const btnCancelar: HTMLButtonElement = document.getElementById("cancelarEdicao") as HTMLButtonElement;
 
-        btnAdd.disabled = false;
-        btnSalvar.disabled = true; 
-        btnCancelar.disabled = true;
-    }
+    btnSalvar.disabled = false;
+    btnSalvarEdicao.disabled = true;
+    btnCancelar.disabled = true;
 }
 
-function botaoSalvar(): void {
-    const mensagemAlerta = "Preencha todos os parâmetros!";
-    if (typeof document !== 'undefined') {
-        let nomeInput : HTMLInputElement = document.getElementById("nome") as HTMLInputElement;
-        let idadeInput: HTMLInputElement = document.getElementById("idade") as HTMLInputElement;
-        let alturaInput: HTMLInputElement = document.getElementById("altura") as HTMLInputElement;
-        let pesoInput: HTMLInputElement = document.getElementById("peso") as HTMLInputElement;
 
-        if (nomeInput && idadeInput && alturaInput && pesoInput){
-            let nome: string = nomeInput.value;
-            let idade: number = parseInt(idadeInput.value);
-            let altura: number = parseFloat(alturaInput.value);
-            let peso: number = parseFloat(pesoInput.value);
-            
-            if (!nome || !idade || !altura || !peso) {
-                alert(mensagemAlerta);
-            }else{
-                let aluno: Aluno = new Aluno(nome, idade, altura, peso);
-                turma.addAluno(aluno);
-                turma.gerarTableHTML();
-            }
-        }else {
-            alert(mensagemAlerta);
-        }
+function botaoSalvar(id: number): void {
+    let nomeInput: HTMLInputElement = document.getElementById("nome") as HTMLInputElement;
+    let idadeInput: HTMLInputElement = document.getElementById("idade") as HTMLInputElement;
+    let alturaInput: HTMLInputElement = document.getElementById("altura") as HTMLInputElement;
+    let pesoInput: HTMLInputElement = document.getElementById("peso") as HTMLInputElement;
 
-        nomeInput.value = "";
-        idadeInput.value = "0";
-        alturaInput.value = "0.0";
-        pesoInput.value = "0.0";
+    const nome = nomeInput.value;
+    const idade = parseInt(idadeInput.value);
+    const altura = parseFloat(alturaInput.value);
+    const peso = parseFloat(pesoInput.value);
 
-        const btnAdd: HTMLButtonElement = document.getElementById("salvar") as HTMLButtonElement;
-        const btnSalvar: HTMLButtonElement = document.getElementById("salvarEdicao") as HTMLButtonElement;
-        const btnCancelar: HTMLButtonElement = document.getElementById("cancelarEdicao") as HTMLButtonElement;
-
-        btnAdd.disabled = false;
-        btnSalvar.disabled = true; 
-        btnCancelar.disabled = true;
-
+    const aluno: Aluno = turma.getAlunoById(id);
+    if (aluno) {
+        aluno.setNomeCompleto(nome);
+        aluno.setIdade(idade);
+        aluno.setAltura(altura);
+        aluno.setPeso(peso);
+        turma.gerarTableHTML();
     }
+
+    botaoCancelar(); 
 }
+
 
 // Alunos iniciais
 const aluno1: Aluno = new Aluno("Maria da Silva", 11, 1.50, 35.2);

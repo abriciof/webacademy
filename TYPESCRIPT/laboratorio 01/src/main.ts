@@ -243,7 +243,15 @@ function botaoSalvarEdicao(id: number) {
     const novoTitulo = tituloInput.value;
     const novaPrioridade = prioridadeSelect.value;
     const novaDescricao = descricaoInput.value;
-    const novaDataEntrega = dataInput.value ? new Date(dataInput.value) : undefined;
+    let novaDataEntrega;
+
+    if (dataInput.value){
+        let data = dataInput.value.split('-');
+        let ano: number = parseInt(data[0]);
+        let mes: number = parseInt(data[1]) - 1;
+        let dia: number = parseInt(data[2]);
+        novaDataEntrega = new Date(ano,mes,dia);
+    }
 
     todoList.atualizarTarefa(id, novoTitulo, novaPrioridade, novaDescricao, novaDataEntrega);
 
