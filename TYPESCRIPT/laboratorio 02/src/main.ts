@@ -224,7 +224,7 @@ function botaoEditar(id: number): void {
         btnSalvar.disabled = false;
         btnCancelar.disabled = false;
 
-        btnSalvar.onclick = function() { botaoSalvar(id); }; // Atualiza a função onclick do botão Salvar para passar o ID
+        btnSalvar.onclick = function() { botaoSalvar(id); }; 
     }
 
     const btnSalvar: HTMLButtonElement = document.getElementById("salvar") as HTMLButtonElement;
