@@ -1,5 +1,5 @@
 import express, { Request, Response } from "express";
-import validateEnv from "./utils/ValidateEnv";
+import validateEnv from "./utils/validateEnv";
 import dotenv from "dotenv";
 
 // configurando env
