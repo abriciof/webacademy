@@ -4,3 +4,4 @@ token.txt
 *.development
 *.production
 .vscode
+*logs
