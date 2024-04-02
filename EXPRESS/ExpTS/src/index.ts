@@ -1,9 +1,10 @@
-import express, { Request, Response } from "express"
-import dotenv from "dotenv"
+import express, { Request, Response } from "express";
+import validateEnv from "./utils/ValidateEnv";
+import dotenv from "dotenv";
 
 // configurando env
-const NODE_ENV = process.env.NODE_ENV;
-dotenv.config({ path : `envs/.env.${NODE_ENV}` });
+dotenv.config({ path : 'envs/.env.development' });
+validateEnv();
 const PORT = process.env.PORT ?? 3333;
 
 // iniciando app
@@ -23,6 +24,6 @@ app.post("/", (req: Request,res: Response) => {
 });
 
 app.listen(PORT, ()=>{
-    console.log(`Express rodando na porta ${PORT}. NODE_ENV: ${NODE_ENV}`);
+    console.log(`Express rodando na porta ${PORT}. NODE_ENV: ${process.env.NODE_ENV}`);
 });
 
