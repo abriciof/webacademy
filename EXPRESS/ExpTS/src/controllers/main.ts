@@ -11,9 +11,10 @@ const loren = (req: Request, res: Response) => {
     let paragrafos = "";
     if (num && num >=1){
         paragrafos = loremIpsum({count: num, units: 'paragraph', suffix:'<br><br>'});
-        paragrafos = `<p>${paragrafos}</p>`;
     }
-    res.send(paragrafos);
+    res.render('main/loren', {
+        loren: paragrafos
+    })
 };
 
 const hb1 = (req: Request, res: Response) => {
