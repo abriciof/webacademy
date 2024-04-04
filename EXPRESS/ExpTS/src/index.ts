@@ -39,7 +39,10 @@ app.use(
 );
    
 // Log
-app.use(logger('completo'));
+app.use(logger('simples'));
+
+// urlencoded
+app.use(express.urlencoded({extended: false}));
 
 // Router
 app.use(router);

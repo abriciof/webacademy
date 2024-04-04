@@ -1,6 +1,10 @@
-$color: blue    ;
+$color: black;
 
 
-h2 {
+a {
  color: $color;
+}
+
+th:last-child, td:last-child {
+    text-align: right;
 }

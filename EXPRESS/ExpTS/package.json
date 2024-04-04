@@ -4,13 +4,14 @@
   "description": "Segunda atividade de Express",
   "main": "src/index.ts",
   "scripts": {
-    "start": "npx nodemon src/index.ts",
+    "start": "npx nodemon src/index.ts --watch src",
     "start:prod": "node build/index.js",
     "build": "npx tsc",
     "lint": "npx eslint --ext .ts src/",
     "lint:fix": "npx eslint --fix --ext .ts src/",
     "format": "npx prettier --write src/",
-    "sass": "npx sass src/public/scss/main.scss src/public/css/main.css "
+    "build:sass": "npx sass src/public/scss/main.scss src/public/css/main.css ",
+    "start:db": "npx json-server --watch data/db.json --port 3355"
   },
   "author": "Fabrício Guimarães",
   "license": "ISC",
@@ -20,6 +21,7 @@
     "envalid": "^8.0.0",
     "express": "^4.19.1",
     "express-handlebars": "^7.1.2",
+    "json-server": "^1.0.0-alpha.23",
     "lorem-ipsum": "^2.0.8",
     "morgan": "^1.10.0",
     "node-sass-middleware": "^1.1.0",

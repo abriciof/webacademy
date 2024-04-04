@@ -3,7 +3,9 @@ import { loremIpsum } from 'lorem-ipsum';
 
 
 const index = (req: Request, res: Response) => {
-    res.end('Welcome to Web academy!');
+    res.render("main/index",{
+        mensagem: 'Welcome to Web academy!'
+    })
 };
 
 const loren = (req: Request, res: Response) => {

@@ -1,0 +1,26 @@
+<div class="d-flex justify-content-between">
+    <h4>Listagem de Produtos</h4>
+    <a href="/produto/create"><i class="bi bi-plus-square-fill fs-4"></i></a>
+</div>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th >Nome</th>
+      <th >Preço</th>
+      <th >Opções</th>
+    </tr>
+  </thead>
+  <tbody>
+    {{#each produtos}}
+    <tr>
+      <td>{{nome}}</td>
+      <td>{{preco}}</td>
+      <td>
+        <a href="/produto/{{id}}"><i class="bi bi-eye-fill fs-5"></i></a>
+        <a href="/produto/update/{{id}}"><i class="bi bi-pencil-fill fs-5"></i></a>
+        <a href="/produto/remove/{{id}}"><i class="bi bi-trash-fill fs-5"></i></a>
+      </td>
+    </tr>
+    {{/each}}
+  </tbody>
+</table>

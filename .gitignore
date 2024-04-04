@@ -5,3 +5,4 @@ token.txt
 *.production
 .vscode
 *logs
+data*

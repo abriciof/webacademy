@@ -7,11 +7,12 @@ const caminhoLog = `${process.env.LOGS}/server.log`;
 function logger(tipo: string) {
     return (req: Request, res: Response, next: NextFunction) => {
       if (tipo === 'simples') {
+        const mensagem = `\n${new Date().toISOString()} ${req.url} ${req.method}`;
         fs.appendFile(
             caminhoLog,
-            `\n${new Date().toISOString()} ${req.url} ${req.method}`,
+            mensagem,
             function () {
-              console.log(`Log Atualizado`);
+              console.log(mensagem.substring(3));
             },
           );
       } else {
