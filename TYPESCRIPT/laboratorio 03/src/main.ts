@@ -17,7 +17,7 @@ class TV implements Produto {
     ) {}
 
     descricao(): string {
-        return `${this.fabricante} ${this.modelo} ${this.tamanhoPolegadas}" ${this.resolucao} - R$${this.valor}`;
+        return `${this.fabricante} ${this.modelo} ${this.tamanhoPolegadas}" ${this.resolucao} - R$ ${this.valor}`;
     }
 }
 
@@ -31,7 +31,7 @@ class Celular implements Produto {
     ) {}
 
     descricao(): string {
-        return `${this.fabricante} ${this.modelo} ${this.memoria} - R$${this.valor}`;
+        return `${this.fabricante} ${this.modelo} ${this.memoria} - R$ ${this.valor}`;
     }
 }
 
@@ -45,7 +45,7 @@ class Bicicleta implements Produto {
     ) {}
 
     descricao(): string {
-        return `${this.fabricante} ${this.modelo} Aro ${this.tamanhoAro} - R$${this.valor}`;
+        return `${this.fabricante} ${this.modelo} Aro ${this.tamanhoAro} - R$ ${this.valor}`;
     }
 }
 
@@ -86,53 +86,79 @@ carrinho.adicionar(bicicleta);
 console.log("Itens no Carrinho:");
 carrinho.getItens().forEach(item => console.log(item.descricao()));
 
-console.log(`Valor Total: R$${carrinho.valorTotal()}`);
+console.log(`Valor Total: R$ ${carrinho.valorTotal()}`);
 
-if (typeof document !== 'undefined') {
-    document.addEventListener('DOMContentLoaded', function () {
-        const produtoSelect = document.getElementById('produto') as HTMLSelectElement;
-        const adicionarButton = document.querySelector('button') as HTMLButtonElement;
-
-        produtoSelect.addEventListener('change', atualizarCamposProduto);
-        adicionarButton.addEventListener('click', adicionarProduto);
-    });
-}
 
 function atualizarCamposProduto() {
-    const produto = (document.getElementById('produto') as HTMLSelectElement).value;
-    // Aqui você pode mostrar/ocultar campos específicos para cada tipo de produto
-    // Por exemplo, esconder o campo de resolução se o produto selecionado não for uma TV
+    const select = (document.getElementById('produtos') as HTMLSelectElement);
+    const bicicletaDiv = document.getElementById('bicicleta');
+    const tvDiv = document.getElementById('tv');
+    const celularDiv = document.getElementById('celular');
+ 
+    if (select){
+        let valor = select.value;
+        switch(valor){
+            case 'tv':
+                if (tvDiv){
+                    tvDiv.style.display = 'block'
+                }
+
+                if (bicicletaDiv && celularDiv){
+                    bicicletaDiv.style.display = 'none';
+                    celularDiv.style.display = 'none';
+                }
+                break;
+            case 'celular':
+                if (celularDiv){
+                    celularDiv.style.display = 'block'
+                }
+
+                if (tvDiv && bicicletaDiv){
+                    tvDiv.style.display = 'none';
+                    bicicletaDiv.style.display = 'none';
+                }
+                break;
+            case 'bicicleta':
+                if (bicicletaDiv){
+                    bicicletaDiv.style.display = 'block'
+                }
+                if (tvDiv && celularDiv){
+                    tvDiv.style.display = 'none';
+                    celularDiv.style.display = 'none';
+                }
+                break;
+        }
+    }
 }
 
-function adicionarProduto() {
-    const produto = (document.getElementById('produto') as HTMLSelectElement).value;
-    const modelo = (document.getElementById('modelo') as HTMLInputElement).value;
-    // Coletar outros valores dos campos...
-
+function botaoAdd(produto: string) {
+   
     let novoProduto;
-
     switch (produto) {
         case 'tv':
-            // Supondo que existam campos específicos para cada produto no seu HTML
-            const resolucao = (document.getElementById('resolucao') as HTMLInputElement).value;
-            const tamanhoPolegadas = parseInt((document.getElementById('tamanhoPolegadas') as HTMLInputElement).value);
-            // Coletar valor e fabricante...
-            const fabricante = 'dad';
-            const valor = 323;
-            novoProduto = new TV(modelo, resolucao, tamanhoPolegadas, fabricante, valor);
+            const modeloTv = (document.getElementById('modeloTv') as HTMLInputElement).value;
+            const resolucaoTv = (document.getElementById('resolucaoTv') as HTMLInputElement).value;
+            const polegadasTv = parseInt((document.getElementById('polegadasTv') as HTMLInputElement).value);
+            const fabricanteTv = (document.getElementById('fabricanteTv') as HTMLInputElement).value;
+            const valorTv = parseInt((document.getElementById('valorTv') as HTMLInputElement).value);
+            novoProduto = new TV(modeloTv, resolucaoTv, polegadasTv, fabricanteTv, valorTv);
+           
             break;
         case 'celular':
-            // Coletar memória, valor, fabricante...
-            const memoria = "23gb";
-            const fabricante2 = 'dad';
-            const valor2 = 323;
-            novoProduto = new Celular(modelo, memoria, fabricante2, valor2);
+            const modeloCelular = (document.getElementById('modeloCelular') as HTMLInputElement).value;
+            const memoriaCelular = (document.getElementById('memoriaCelular') as HTMLInputElement).value;
+            const fabricanteCelular = (document.getElementById('fabricanteCelular') as HTMLInputElement).value;
+            const valorCelular = parseInt((document.getElementById('valorCelular') as HTMLInputElement).value);
+            novoProduto = new Celular(modeloCelular, memoriaCelular, fabricanteCelular, valorCelular);
+           
             break;
         case 'bicicleta':
-            // Coletar tamanho do aro, valor, fabricante...
-            const fabricante3 = 'dad';
-            const valor3 = 323;
-            novoProduto = new Bicicleta(modelo, 3, fabricante3, valor3);
+            const modeloBicicleta = (document.getElementById('modeloBicicleta') as HTMLInputElement).value;
+            const aroBicicleta = parseInt((document.getElementById('aroBicicleta') as HTMLInputElement).value);
+            const fabricanteBicicleta = (document.getElementById('fabricanteBicicleta') as HTMLInputElement).value;
+            const valorBicicleta = parseInt((document.getElementById('valorBicicleta') as HTMLInputElement).value);
+            novoProduto = new Bicicleta(modeloBicicleta, aroBicicleta, fabricanteBicicleta, valorBicicleta);
+           
             break;
     }
 
@@ -141,6 +167,7 @@ function adicionarProduto() {
         atualizarCarrinhoUI();
     }
 }
+
 function atualizarCarrinhoUI() {
     const itensCarrinhoEl = document.getElementById('itensCarrinho');
     const valorTotalEl = document.getElementById('valorTotal');
@@ -152,13 +179,25 @@ function atualizarCarrinhoUI() {
 
         // Adiciona cada item do carrinho na UI
         carrinho.getItens().forEach(produto => {
-            const itemEl = document.createElement('div');
+            const itemEl = document.createElement('li');
             itemEl.classList.add('item-carrinho');
             itemEl.textContent = produto.descricao();
             itensCarrinhoEl.appendChild(itemEl);
         });
 
         // Atualiza o valor total
-        valorTotalEl.textContent = `R$${carrinho.valorTotal().toFixed(2)}`;
+        valorTotalEl.textContent = `Valor Total: R$ ${carrinho.valorTotal().toFixed(2)}`;
     }
 }
+
+function setup(){
+    atualizarCamposProduto();
+    const select = (document.getElementById('produtos') as HTMLSelectElement);
+    select.addEventListener('change', () => {
+        atualizarCamposProduto();
+    });
+    atualizarCarrinhoUI()
+}
+
+setup()
+

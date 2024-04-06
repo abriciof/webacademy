@@ -16,12 +16,12 @@
 
 
         .container{
-            width: 60vw;
+            width: 35vw;
             display: flex;
             flex-direction: column;
             flex-wrap: wrap;
             text-align: start;
-            justify-content: center;
+            justify-content: space-between;
         }
 
 
@@ -111,36 +111,139 @@
             border-radius: 3px;
         }
 
+        .produto-entrada{
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin-top: 5px;
+            padding-top: 8px;
+        }
+
+        .produto-entrada>div{
+            display: flex;
+            flex-direction: column;
+        }
+
+        .celular, .bicicleta {
+            display: none;
+        }
+
+
+
+        .produto-entrada > div >label{
+            font-weight: bold;
+        }
+
+        .produto-entrada > div > input{
+            border: none;
+        }
+
         </style>
 </head>
 <body>
     <div class="container">
         <h1> Carrinho de Compras </h1>
     
-
         <div class="entradas">
             <label for="produtos">Selecione um Produto:</label>
             <select id="produtos">
-                <option value="tv">TV</option>
+                <option value="tv">Televisão</option>
                 <option value="celular">Celular</option>
                 <option value="bicicleta">Bicicleta</option>
             </select>
-        </div>
-            
-        <div class="botoes">
+        
+
+        <div id="tv" class="produto-entrada">
+            <div>
+                <label for="modeloTv">Modelo:</label>
+                <input type="text" id="modeloTv" placeholder="Samsung Smart">
+            </div>
+            <div>
+                <label for="resolucaoTv">Resolucao:</label>
+                <input type="text" id="resolucaoTv" placeholder="4k" >
+            </div>
+            <div>
+                <label for="polegadasTv">Polegadas:</label>
+                <input type="number" id="polegadasTv" placeholder="22" step="1">
+            </div>
+            <div>
+                <label for="fabricanteTv">Fabricante:</label>
+                <input type="text" id="fabricanteTv" placeholder="Samsung">
+            </div>
+            <div>
+                <label for="valorTv">Valor:</label>
+                <input type="number" id="valorTv" placeholder="1000" step="1">
+            </div>
+            <br>
+            <button onclick="botaoAdd('tv');">Adicionar ao carrinho</button>
+          
         </div>
 
-        <div class="tabela">
-            <table>
-                <thead>
-                    <tr>
-                
-                    </tr>
-                </thead>
-                <tbody id="conteudoTabela">
-                </tbody>
-            </table>
+        <div id="celular" class="produto-entrada">
+            <div>
+                <label for="modeloCelular">Modelo:</label>
+                <input type="text" id="modeloCelular" placeholder="Moto G5">
+            </div>
+            <div>
+                <label for="memoriaCelular">Memória:</label>
+                <input type="text" id="memoriaCelular" placeholder="128GB" >
+            </div>
+            <div>
+                <label for="fabricanteCelular">Fabricante:</label>
+                <input type="text" id="fabricanteCelular" placeholder="Motorola">
+            </div>
+            <div>
+                <label for="valorCelular">Valor:</label>
+                <input type="number" id="valorCelular" placeholder="3000" step="1">
+            </div>
+            <br>
+            <button onclick="botaoAdd('celular');">Adicionar ao carrinho</button>
+
         </div>
+
+        <div id="bicicleta" class="produto-entrada">
+            <div>
+                <label for="modeloBicicleta">Modelo:</label>
+                <input type="text" id="modeloBicicleta" placeholder="Streat">
+            </div>
+            <div>
+                <label for="aroBicicleta">Tamanho do Aro:</label>
+                <input type="number" id="aroBicicleta" placeholder="22" step="1">
+            </div>
+            <div>
+                <label for="fabricanteBicicleta">Fabricante:</label>
+                <input type="text" id="fabricanteBicicleta" placeholder="Caloi">
+            </div>
+            <div>
+                <label for="valorBicicleta">Valor:</label>
+                <input type="number" id="valorBicicleta" placeholder="1000" step="1">
+            </div>
+            <br>
+            <button onclick="botaoAdd('bicicleta');">Adicionar ao carrinho</button>
+
+        </div>
+    </div>
+            
+    <div class="carrinho">
+        <h4>Itens no Carrinho:</h4>
+        <ul id="itensCarrinho"></ul>
+
+    </div>
+    <div id="valorTotal">
+
+    </div>
+       
+    <!-- <div class="tabela">
+        <table>
+            <thead>
+                <tr>
+            
+                </tr>
+            </thead>
+            <tbody id="conteudoTabela">
+            </tbody>
+        </table>
+    </div> -->
     </div>
 
     <script src="js/main.js"></script>
