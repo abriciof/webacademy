@@ -73,7 +73,7 @@ class Carrinho <T extends Produto> {
 
 const carrinho = new Carrinho<Produto>();
 
-const tv = new TV("X-Series", "4K", 55, "Sony", 5000);
+const tv = new TV("Televisão Digital", "4K", 55, "Sony", 5000);
 const tv2 = new TV("Smart TV", "8K", 78, "Samsung", 8000);
 const celular = new Celular("Galaxy S21", "128GB", "Samsung", 2800);
 const bicicleta = new Bicicleta("Speedster", 29, "Scott", 1200);
