@@ -7,51 +7,51 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model ENDERECO {
-  id      Int       @id
+model Endereco {
+  id      Int       @id @default(autoincrement())
   rua     String    @db.VarChar(100)
   numero  String    @db.VarChar(10)
   cidade  String    @db.VarChar(100)
   uf      String    @db.VarChar(2)
   cep     String    @db.VarChar(10)
-  CLIENTE CLIENTE[]
+  Cliente Cliente[]
 }
 
-model CLIENTE {
+model Cliente {
   cpf             String   @id @db.VarChar(11)
   id_endereco     Int
   nome_completo   String   @db.VarChar(100)
   celular         String   @db.VarChar(20)
   email           String   @db.VarChar(100)
   data_nascimento DateTime @db.Date
-  ENDERECO        ENDERECO @relation(fields: [id_endereco], references: [id])
-  COMPRA          COMPRA[]
+  Endereco        Endereco @relation(fields: [id_endereco], references: [id])
+  Compra          Compra[]
 
   @@unique([cpf, id_endereco])
 }
 
-model SUBCATEGORIA {
+model Subcategoria {
   nome      String      @id @db.VarChar(100)
-  CATEGORIA CATEGORIA[]
+  Categoria Categoria[]
 }
 
-model CATEGORIA {
+model Categoria {
   nome              String       @id @db.VarChar(100)
   nome_subcategoria String
-  SUBCATEGORIA      SUBCATEGORIA @relation(fields: [nome_subcategoria], references: [nome])
-  PRODUTO           PRODUTO[]
+  Subcategoria      Subcategoria @relation(fields: [nome_subcategoria], references: [nome])
+  Produto           Produto[]
 
   @@unique([nome, nome_subcategoria])
 }
 
-model MODELO {
+model Modelo {
   id_modelo    Int       @id
   nome         String    @db.VarChar(100)
   numero_serie String    @db.VarChar(30)
-  PRODUTO      PRODUTO[]
+  Produto      Produto[]
 }
 
-model PRODUTO {
+model Produto {
   codigo                Int       @id
   nome                  String    @db.VarChar(100)
   modelo                Int
@@ -60,13 +60,13 @@ model PRODUTO {
   quantidade_disponivel Int
   categoria             String    @db.VarChar(100)
   subcategoria          String    @db.VarChar(100)
-  MODELO                MODELO    @relation(fields: [modelo], references: [id_modelo])
-  CATEGORIA             CATEGORIA @relation(fields: [categoria, subcategoria], references: [nome, nome_subcategoria])
-  COMPRA                COMPRA?   @relation(fields: [id_compra], references: [id_compra])
+  Modelo                Modelo    @relation(fields: [modelo], references: [id_modelo])
+  Categoria             Categoria @relation(fields: [categoria, subcategoria], references: [nome, nome_subcategoria])
+  Compra                Compra?   @relation(fields: [id_compra], references: [id_compra])
   id_compra       Int?
 }
 
-model COMPRA {
+model Compra {
   id_compra        Int       @id
   ts_compra        DateTime  @db.Timestamp
   desconto         Decimal?  @db.Decimal(10, 2)
@@ -74,6 +74,6 @@ model COMPRA {
   total_compra     Decimal   @db.Decimal(10, 2)
   cpf_cliente      String
   endereco_cliente Int
-  CLIENTE          CLIENTE   @relation(fields: [cpf_cliente, endereco_cliente], references: [cpf, id_endereco])
-  PRODUTO          PRODUTO[]
+  Cliente          Cliente   @relation(fields: [cpf_cliente, endereco_cliente], references: [cpf, id_endereco])
+  Produto          Produto[]
 }
