@@ -1,0 +1,79 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model ENDERECO {
+  id      Int       @id
+  rua     String    @db.VarChar(100)
+  numero  String    @db.VarChar(10)
+  cidade  String    @db.VarChar(100)
+  uf      String    @db.VarChar(2)
+  cep     String    @db.VarChar(10)
+  CLIENTE CLIENTE[]
+}
+
+model CLIENTE {
+  cpf             String   @id @db.VarChar(11)
+  id_endereco     Int
+  nome_completo   String   @db.VarChar(100)
+  celular         String   @db.VarChar(20)
+  email           String   @db.VarChar(100)
+  data_nascimento DateTime @db.Date
+  ENDERECO        ENDERECO @relation(fields: [id_endereco], references: [id])
+  COMPRA          COMPRA[]
+
+  @@unique([cpf, id_endereco])
+}
+
+model SUBCATEGORIA {
+  nome      String      @id @db.VarChar(100)
+  CATEGORIA CATEGORIA[]
+}
+
+model CATEGORIA {
+  nome              String       @id @db.VarChar(100)
+  nome_subcategoria String
+  SUBCATEGORIA      SUBCATEGORIA @relation(fields: [nome_subcategoria], references: [nome])
+  PRODUTO           PRODUTO[]
+
+  @@unique([nome, nome_subcategoria])
+}
+
+model MODELO {
+  id_modelo    Int       @id
+  nome         String    @db.VarChar(100)
+  numero_serie String    @db.VarChar(30)
+  PRODUTO      PRODUTO[]
+}
+
+model PRODUTO {
+  codigo                Int       @id
+  nome                  String    @db.VarChar(100)
+  modelo                Int
+  fabricante            String    @db.VarChar(100)
+  preco_base            Decimal   @db.Decimal(10, 2)
+  quantidade_disponivel Int
+  categoria             String    @db.VarChar(100)
+  subcategoria          String    @db.VarChar(100)
+  MODELO                MODELO    @relation(fields: [modelo], references: [id_modelo])
+  CATEGORIA             CATEGORIA @relation(fields: [categoria, subcategoria], references: [nome, nome_subcategoria])
+  COMPRA                COMPRA?   @relation(fields: [id_compra], references: [id_compra])
+  id_compra       Int?
+}
+
+model COMPRA {
+  id_compra        Int       @id
+  ts_compra        DateTime  @db.Timestamp
+  desconto         Decimal?  @db.Decimal(10, 2)
+  forma_pagamento  String    @db.VarChar(100)
+  total_compra     Decimal   @db.Decimal(10, 2)
+  cpf_cliente      String
+  endereco_cliente Int
+  CLIENTE          CLIENTE   @relation(fields: [cpf_cliente, endereco_cliente], references: [cpf, id_endereco])
+  PRODUTO          PRODUTO[]
+}
