@@ -3,6 +3,7 @@ token.txt
 *node_modules
 *.development
 *.production
-.vscode
+*.vscode
 *logs
 data*
+*coverage
