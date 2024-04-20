@@ -62,15 +62,18 @@ model PRODUTO {
   subcategoria          String    @db.VarChar(100)
   MODELO                MODELO    @relation(fields: [modelo], references: [id_modelo])
   CATEGORIA             CATEGORIA @relation(fields: [categoria, subcategoria], references: [nome, nome_subcategoria])
+  COMPRA                COMPRA?   @relation(fields: [id_compra], references: [id_compra])
+  id_compra       Int?
 }
 
 model COMPRA {
-  id_compra        Int      @id
-  ts_compra        DateTime @db.Timestamp
-  desconto         Decimal  @db.Decimal(10, 2)
-  forma_pagamento  String   @db.VarChar(100)
-  total_compra     Decimal  @db.Decimal(10, 2)
+  id_compra        Int       @id
+  ts_compra        DateTime  @db.Timestamp
+  desconto         Decimal?  @db.Decimal(10, 2)
+  forma_pagamento  String    @db.VarChar(100)
+  total_compra     Decimal   @db.Decimal(10, 2)
   cpf_cliente      String
   endereco_cliente Int
-  CLIENTE          CLIENTE  @relation(fields: [cpf_cliente, endereco_cliente], references: [cpf, id_endereco])
+  CLIENTE          CLIENTE   @relation(fields: [cpf_cliente, endereco_cliente], references: [cpf, id_endereco])
+  PRODUTO          PRODUTO[]
 }
