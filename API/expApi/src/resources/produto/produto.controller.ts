@@ -8,7 +8,7 @@ const index  = async (req: Request, res: Response) => {
     const skip = req.query.skip ? parseInt(req.query.skip?.toString()) : undefined;
     const take = req.query.take ? parseInt(req.query.take?.toString()) : undefined;
     try {
-        const produtos = await listProdutos(skip, take);
+        const produtos = await listProdutos(skip, take  );
         res.status(StatusCodes.OK).json(produtos);
     } catch(err) {
         res.status(StatusCodes.INTERNAL_SERVER_ERROR).json(err);
