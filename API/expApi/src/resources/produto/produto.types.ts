@@ -1,5 +1,4 @@
 import { Produto } from "@prisma/client";
 
-type CreateProdutoDto = Pick<Produto, "nome" | "preco" | "estoque">;
-
-export {CreateProdutoDto};
+export type CreateProdutoDto = Pick<Produto, "nome" | "preco" | "estoque">;
+export type UpdateProdutoDto = Pick<Produto, "nome" | "preco" | "estoque">;

@@ -1,11 +1,14 @@
 import { Request, Response } from "express"
 import { ReasonPhrases, StatusCodes } from "http-status-codes";
-import { createProduto, checkNomeIsAvaliable, listProdutos, readProduto } from "./produto.service";
-import { CreateProdutoDto } from "./produto.types";
+import { createProduto, checkNomeIsAvaliable, listProdutos, readProduto, updateProduto, deleteProduto } from "./produto.service";
+import { CreateProdutoDto, UpdateProdutoDto } from "./produto.types";
+
 
 const index  = async (req: Request, res: Response) => {
+    const skip = req.query.skip ? parseInt(req.query.skip?.toString()) : undefined;
+    const take = req.query.take ? parseInt(req.query.take?.toString()) : undefined;
     try {
-        const produtos = await listProdutos();
+        const produtos = await listProdutos(skip, take);
         res.status(StatusCodes.OK).json(produtos);
     } catch(err) {
         res.status(StatusCodes.INTERNAL_SERVER_ERROR).json(err);
@@ -39,9 +42,33 @@ const read = async (req: Request, res: Response) => {
     }
 };
 
-const update = async (req: Request, res: Response) => {};
+const update = async (req: Request, res: Response) => {
+    const { id } = req.params;
+    const produto = req.body as UpdateProdutoDto;
+    try {
+        if (await checkNomeIsAvaliable(produto.nome, id)) {
+            const updatedProduto = await updateProduto(id, produto);
+            res.status(StatusCodes.NO_CONTENT).json(updatedProduto);
+        } else{
+            res.status(StatusCodes.CONFLICT).json(ReasonPhrases.CONFLICT);
+        }
+    } catch (err){
+        res.status(StatusCodes.INTERNAL_SERVER_ERROR).json(err);
+    }
 
-const remove = async (req: Request, res: Response) => {};
+};
+
+const remove = async (req: Request, res: Response) => {
+    const { id } = req.params;
+    console.log(id);
+    try {
+        const deletedProduto = await deleteProduto(id);
+        console.log(deletedProduto);
+        res.status(StatusCodes.NO_CONTENT).json(deletedProduto); 
+    } catch(err) {
+        res.status(StatusCodes.INTERNAL_SERVER_ERROR).json(err);
+    }
+};
 
 export default { index, create, read, update, remove};
 
