@@ -1,0 +1,62 @@
+# Fabrício da Costa Guimarães
+
+version: '3'
+
+services:
+  mysql:
+    build: ./mysql/
+    container_name: mysql_tp
+    ports:
+      - 3306:3306
+    environment:
+      - MYSQL_ROOT_PASSWORD=fabricio_tp
+    networks:
+      - rede_trabalho_pratico
+    volumes:
+      - volume_mysql:/var/lib/mysql
+
+  phpmyadmin:
+    image: phpmyadmin:latest
+    container_name: phpmyadmin_tp
+    ports:
+      - 8080:80
+    environment:
+      - PMA_HOST=mysql
+      - PMA_PORT=3306
+      - PMA_USER=root
+      - PMA_PASSWORD=fabricio_tp
+      - PMA_ARBITRARY=1
+    networks:
+      - rede_trabalho_pratico
+    depends_on:
+      - mysql
+
+  frontend:
+    build: ./frontend/
+    container_name: frontend_tp
+    ports:
+      - 8000:80
+    networks:
+      - rede_trabalho_pratico
+    depends_on:
+      - phpmyadmin
+
+  backend:
+    build: ./backend/
+    container_name: backend_tp
+    restart: always
+    ports:
+      - 4444:4444
+    networks:
+      - rede_trabalho_pratico
+    volumes:
+      - volume_backend_tp:/app/log/
+    depends_on:
+      - frontend
+
+networks:
+  rede_trabalho_pratico:
+    driver: bridge
+volumes:
+  volume_mysql:
+  volume_backend_tp:

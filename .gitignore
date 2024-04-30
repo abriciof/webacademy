@@ -1,9 +1,8 @@
 token.txt
-*.env
 *node_modules
 *.development
 *.production
 *.vscode
 *logs
-data
+*.env
 *coverage
