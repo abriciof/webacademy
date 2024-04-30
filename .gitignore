@@ -5,5 +5,5 @@ token.txt
 *.production
 *.vscode
 *logs
-data*
+data
 *coverage
