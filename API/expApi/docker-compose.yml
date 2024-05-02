@@ -1,0 +1,34 @@
+version: "3.8"
+services:
+  backend:
+    container_name: backend_loja
+    build: ./backend
+    volumes:
+      - ./backend/src:/app/src
+    ports:
+      - ${BACKEND_PORT}:${BACKEND_PORT}
+
+  frontend:
+    container_name: frontend_loja
+    build: ./frontend
+    volumes:
+      - ./frontend/src:/app/src
+    ports:
+      - ${FRONTEND_PORT}:${FRONTEND_PORT}
+
+  db:
+    container_name: db_loja
+    image: mysql:8.0
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - mysql_config:/etc/mysql
+    ports:
+      - ${MYSQL_PORT}:3306
+    environment:
+      - MYSQL_DATABASE=${MYSQL_DATABASE}
+      - MYSQL_USER=${MYSQL_USER}
+      - MYSQL_PASSWORD=${MYSQL_PASSWORD}
+
+volumes:
+  mysql_data:
+  mysql_config:

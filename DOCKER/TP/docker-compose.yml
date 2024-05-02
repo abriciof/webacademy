@@ -38,8 +38,6 @@ services:
       - 8000:80
     networks:
       - rede_trabalho_pratico
-    depends_on:
-      - phpmyadmin
 
   backend:
     build: ./backend/
@@ -52,7 +50,7 @@ services:
     volumes:
       - volume_backend_tp:/app/log/
     depends_on:
-      - frontend
+      - mysql
 
 networks:
   rede_trabalho_pratico:
