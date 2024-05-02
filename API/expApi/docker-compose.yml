@@ -1,34 +1,63 @@
-version: "3.8"
+version: "3"
 services:
+  db:
+    container_name: db_loja
+    image: mysql:latest
+    volumes:
+      - mysql_data:/var/lib/mysql
+      # - mysql_config:/etc/mysql
+    ports:
+      - 3306:3306
+    networks:
+      - rede_api
+    environment:
+      - MYSQL_ROOT_PASSWORD=fabricio
+      - MYSQL_DATABASE=loja
+
   backend:
     container_name: backend_loja
     build: ./backend
+    restart: always
     volumes:
       - ./backend/src:/app/src
+    networks:
+      - rede_api
     ports:
-      - ${BACKEND_PORT}:${BACKEND_PORT}
+      - 4466:4466
+    environment:
+      - DATABASE_URL=mysql://root:fabricio@db:3306/loja
+    depends_on:
+      - db
 
   frontend:
     container_name: frontend_loja
     build: ./frontend
     volumes:
       - ./frontend/src:/app/src
+    networks:
+      - rede_api
     ports:
-      - ${FRONTEND_PORT}:${FRONTEND_PORT}
+      - 4477:4477
 
-  db:
-    container_name: db_loja
-    image: mysql:8.0
-    volumes:
-      - mysql_data:/var/lib/mysql
-      - mysql_config:/etc/mysql
+  phpmyadmin:
+    image: phpmyadmin:latest
+    container_name: phpmyadmin_tp
     ports:
-      - ${MYSQL_PORT}:3306
+      - 8080:80
+    networks:
+      - rede_api
     environment:
-      - MYSQL_DATABASE=${MYSQL_DATABASE}
-      - MYSQL_USER=${MYSQL_USER}
-      - MYSQL_PASSWORD=${MYSQL_PASSWORD}
+      - PMA_HOST=db
+      - PMA_PORT=3306
+      - PMA_USER=root
+      - PMA_PASSWORD=fabricio
+      - PMA_ARBITRARY=1
+    depends_on:
+      - db
 
 volumes:
   mysql_data:
-  mysql_config:
+  # mysql_config:
+networks:
+  rede_api:
+    driver: bridge
