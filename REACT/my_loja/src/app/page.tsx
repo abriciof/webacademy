@@ -1,14 +1,12 @@
 "use client";
 import React from "react";
-import Navbar from "./components/NavBar";
+import Navbar from "./components/Navbar";
 import ListagemProdutos from "./components/ListagemProdutos";
 import ResumoCarrinho from "./components/ResumoCarrinho";
 
 export default function Produtos() {
   return (
     <>
-      
-
       <main>
         <div className="container p-5">
           <ResumoCarrinho 
