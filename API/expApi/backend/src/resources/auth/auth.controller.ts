@@ -23,7 +23,9 @@ const signup = async (req: Request, res: Response) => {
             tipoUsuarioId: TipoUsuarios.CLIENT
         });
         
-        res.status(StatusCodes.CREATED).json(newUsuario);
+        res.status(StatusCodes.CREATED).json({
+            msg: "Usuário criado com sucesso, faça login"
+        });
     
     } catch (e: any) {
         res.status(StatusCodes.INTERNAL_SERVER_ERROR).json(e.errors);
@@ -53,6 +55,16 @@ const login = async (req: Request, res: Response) => {
     }
 
 }
-const logout = async (req: Request, res: Response) => {}
+const logout = async (req: Request, res: Response) => {
+
+    try{
+        req.session.destroy(()=>{
+            res.status(StatusCodes.OK).json({ msg: 'Logout feito com sucesso' });
+        });
+    }catch(err: any){
+        res.status(StatusCodes.INTERNAL_SERVER_ERROR).json(err.errors);
+    }
+
+}
 
 export default { signup, login, logout }
