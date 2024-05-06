@@ -7,7 +7,7 @@
     "start": "npx nodemon --watch src src/index.ts",
     "build": "npx tsc",
     "start:prod": "node build/index.js",
-    "migrate": "npx prisma migrate dev"
+    "migrate": "docker exec -it backend_loja npx prisma migrate dev"
   },
   "keywords": [],
   "author": "",

@@ -6,11 +6,13 @@ import cookieParser from "cookie-parser";
 import setCookieLang from "./middlewares/setLangCookie"
 import { v4 as uuidv4 } from "uuid";
 import session from "express-session";
+import { ItemCarrinhoDto } from "./resources/compra/compra.type";
 
 declare module "express-session" {
     interface SessionData {
-        uid: string;
+        uid: string
         tipoUsuarioId: string
+        carrinho: ItemCarrinhoDto[]
     }
 }
 
