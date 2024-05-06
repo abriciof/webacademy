@@ -4,7 +4,9 @@ interface ResumoCarrinhoProps{
 }
 
 export default function ResumoCarrinho({quantidade, total}: ResumoCarrinhoProps){
-    return (
+
+
+  return (
     <div className="card mb-4">
         <div className="card-body">
           <h5 className="card-title mb-4 fw-light">Resumo do Carrinho</h5>
@@ -14,5 +16,5 @@ export default function ResumoCarrinho({quantidade, total}: ResumoCarrinhoProps)
           </p>
         </div>
       </div>
-    );
+  );
 }

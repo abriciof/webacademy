@@ -1,6 +1,11 @@
+import { ItemCarrinhoInterface } from "../types/carrinho";
 import ItemCarrinho from "./ItemCarrinho";
 
-export default function ListaCarrinho(){
+interface ListaCarrinhoProps{
+    itensCarrinho: ItemCarrinhoInterface[]
+}
+
+export default function ListaCarrinho({itensCarrinho}: ListaCarrinhoProps){
     return (
         <div className="table-responsive">
             <table className="table ">
@@ -15,17 +20,15 @@ export default function ListaCarrinho(){
                 </thead>
                 <tbody>
 
-                <ItemCarrinho 
-                    nome="Notebook 1"
-                    valor={1500.50}
-                    quantidade={2}
-                />
+                {itensCarrinho.map((itemCarrinho) => (
+                    <ItemCarrinho 
+                        key={itemCarrinho.id}
+                        itemCarrinho={itemCarrinho}
+                    />
+                ))}
 
-                <ItemCarrinho 
-                    nome="Notebook 2"
-                    valor={1999.99}
-                    quantidade={4}
-                />
+                
+
 
                 </tbody>
             </table>

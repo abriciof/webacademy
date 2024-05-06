@@ -6,27 +6,37 @@
   "scripts": {
     "start": "npx nodemon --watch src src/index.ts",
     "build": "npx tsc",
-    "start:prod": "node build/index.js"
+    "start:prod": "node build/index.js",
+    "migrate": "npx prisma migrate dev"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
     "@prisma/client": "^5.12.1",
+    "bcryptjs": "^2.4.3",
     "cookie-parser": "^1.4.6",
     "dotenv": "^16.4.5",
     "envalid": "^8.0.0",
     "express": "^4.19.2",
+    "express-session": "^1.18.0",
     "http-status-codes": "^2.3.0",
-    "joi": "^17.12.3"
+    "joi": "^17.12.3",
+    "uuid": "^9.0.1"
   },
   "devDependencies": {
+    "@types/bcryptjs": "^2.4.6",
     "@types/cookie-parser": "^1.4.7",
     "@types/express": "^4.17.21",
+    "@types/express-session": "^1.18.0",
     "@types/node": "^20.12.7",
+    "@types/uuid": "^9.0.8",
     "nodemon": "^3.1.0",
     "prisma": "^5.12.1",
     "ts-node": "^10.9.2",
     "typescript": "^5.4.5"
+  },
+  "prisma": {
+    "seed": "ts-node prisma/seed.ts"
   }
 }

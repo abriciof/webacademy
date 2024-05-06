@@ -1,11 +1,11 @@
 "use client";
 import React from "react";
 import ResumoCarrinho from "../components/ResumoCarrinho";
-import ItemCarrinho from "../components/ItemCarrinho";
-import ListaCarrinho from "../components/ListaCarrinho";
+import { mockItensCarrinho } from "../mocks/itensCarrinho";
+import ListaCarrinho from "../components/ListagemCarrinho";
 
 export default function Carrinho() {
-
+  const itensCarrinho = mockItensCarrinho; 
 
   return (
     <>
@@ -16,7 +16,7 @@ export default function Carrinho() {
               <h5 className="card-title mb-4 fw-light">
                 Produtos selecionados
               </h5>
-              <ListaCarrinho />
+              <ListaCarrinho itensCarrinho={itensCarrinho}/>
             </div>
           </div>
 

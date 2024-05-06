@@ -4,6 +4,15 @@ import validateEnv from "./utils/validateEnv";
 import router from "./router"
 import cookieParser from "cookie-parser";
 import setCookieLang from "./middlewares/setLangCookie"
+import { v4 as uuidv4 } from "uuid";
+import session from "express-session";
+
+declare module "express-session" {
+    interface SessionData {
+        uid: string;
+        tipoUsuarioId: string
+    }
+}
 
 dotenv.config();    
 
@@ -13,6 +22,13 @@ const app = express();
 const PORT = process.env.PORT ?? 4444;
 
 app.use(cookieParser());
+app.use(session({
+    genid: (req) => uuidv4(),
+    secret: 'Hi9Cf#mK98$ad!@asdDf1S02#2A1!2',
+    resave: true,
+    saveUninitialized: true
+}));
+
 app.use(setCookieLang);
 app.use(express.json());
 app.use(router);

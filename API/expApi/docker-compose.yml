@@ -20,6 +20,7 @@ services:
     restart: always
     volumes:
       - ./backend/src:/app/src
+      - ./backend/prisma:/app/prisma
     networks:
       - rede_api
     ports:
