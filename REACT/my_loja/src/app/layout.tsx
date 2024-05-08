@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import "bootstrap/dist/css/bootstrap.min.css";
+import BootstrapClient from "./components/BootstrapClient";
 import Navbar from "./components/Navbar";
 
 export const metadata: Metadata = {
@@ -15,7 +16,10 @@ export default function RootLayout({
     <html lang="en">
       <body>
         <Navbar />
+
         {children}
+        
+        <BootstrapClient />
         </body>
     </html>
   );
