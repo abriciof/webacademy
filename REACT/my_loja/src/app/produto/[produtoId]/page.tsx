@@ -38,16 +38,17 @@ export default function Produto() {
                 <h5 className="card-title mb-4 fw-bold">{produto.nome}</h5>
 
                 <div className="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-3 mb-3">
-                  <div className="card shadow-sm h-100">
                     {produto.fotos?.map((foto) => (
-                      <Image
-                          key={foto.titulo}
-                          src={foto.src}
-                          className="card-img-top"
-                          alt={foto.titulo}
-                          width={300}
-                          height={320}
-                      />
+                      <div className="card shadow-sm h-100" key={foto.titulo}>  
+                        <Image
+                            
+                            src={foto.src}
+                            className="card-img-top"
+                            alt={foto.titulo}
+                            width={300}
+                            height={320}
+                        />
+                      </div>
                     ))}
                     {/* <Image
                       src={produto.fotos[0].src}
@@ -56,7 +57,6 @@ export default function Produto() {
                       width={300}
                       height={320}
                     /> */}
-                  </div>
                 </div>
                 
 
