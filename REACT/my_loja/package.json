@@ -2,6 +2,7 @@
   "name": "my_loja",
   "version": "0.1.0",
   "private": true,
+  "author": "Fabricio Guimaraes",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
@@ -9,6 +10,8 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@tanstack/react-query": "^5.36.2",
+    "axios": "^1.6.8",
     "bootstrap": "^5.3.3",
     "next": "14.2.3",
     "react": "^18",

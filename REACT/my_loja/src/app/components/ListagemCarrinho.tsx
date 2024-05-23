@@ -1,11 +1,13 @@
+import { Action } from "../carrinho/page";
 import { ItemCarrinhoInterface } from "../types/carrinho";
 import ItemCarrinho from "./ItemCarrinho";
 
 interface ListaCarrinhoProps{
-    itensCarrinho: ItemCarrinhoInterface[]
+    itensCarrinho: ItemCarrinhoInterface[];
+    dispatch: React.Dispatch<Action>;
 }
 
-export default function ListaCarrinho({itensCarrinho}: ListaCarrinhoProps){
+export default function ListaCarrinho({itensCarrinho, dispatch}: ListaCarrinhoProps){
     return (
         <div className="table-responsive">
             <table className="table ">
@@ -24,11 +26,9 @@ export default function ListaCarrinho({itensCarrinho}: ListaCarrinhoProps){
                     <ItemCarrinho 
                         key={itemCarrinho.id}
                         itemCarrinho={itemCarrinho}
+                        dispatch={dispatch}
                     />
                 ))}
-
-                
-
 
                 </tbody>
             </table>
