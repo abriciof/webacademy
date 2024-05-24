@@ -8,6 +8,19 @@ import { any } from "joi";
 
 
 const signup = async (req: Request, res: Response) => {
+    /*
+    #swagger.summary = 'Cria uma conta de usuário.'
+    #swagger.parameters['body'] = {
+        in: 'body',
+        schema: { $ref: '#/definitions/SingUp' }
+    }
+    #swagger.responses[200] = {
+        schema: { msg: 'Usuário criado com sucesso, faça login' }
+    }
+    #swagger.responses[409] = {
+        schema: { msg: 'Email informado já está sendo usado' }
+    }
+    */
     const usuario = req.body as SignUpDto;
     try {
         const emailIsAvaliable = await checkEmailIsAvaliable(usuario.email);
@@ -33,6 +46,19 @@ const signup = async (req: Request, res: Response) => {
 };
 
 const login = async (req: Request, res: Response) => {
+    /*
+    #swagger.summary = 'Inicia Sessão uma conta de usuário.'
+    #swagger.parameters['body'] = {
+        in: 'body',
+        schema: { $ref: '#/definitions/Login' }
+    }
+    #swagger.responses[200] = {
+        schema: { msg: 'Usuário autenticado' }
+    }
+    #swagger.responses[401] = {
+        schema: { msg: 'Email e/ou senha incorretos' }
+    }
+    */
     const { email, senha } = req.body;
     try {
         const usuario = await checkAuth({ email, senha });
@@ -56,6 +82,12 @@ const login = async (req: Request, res: Response) => {
 
 }
 const logout = async (req: Request, res: Response) => {
+    /*
+    #swagger.summary = 'Finaliza Sessão uma conta de usuário autenticado.'
+    #swagger.responses[200] = {
+        schema: { msg: 'Logout feito com sucesso' }
+    }
+    */
 
     try{
         req.session.destroy(()=>{

@@ -5,6 +5,21 @@ import {createCompra, createItemCarrinho} from "../compra/compra.service"
 import { ItemListaCompra } from "@prisma/client";
 
 const addItemCarrinho = async (req: Request, res: Response) => {
+    /*
+    #swagger.summary = 'Adiciona item ao carrinho.'
+    #swagger.parameters['body'] = {
+        in: 'body',
+        schema: { 
+            $ref: '#/definitions/ItemCarrinho'
+        }
+    }
+    #swagger.responses[200] = {
+        schema: { msg: 'Item adicionado ao carrinho!' }
+    }
+     #swagger.responses[409] = {
+        schema: { msg: 'Sessão expirada, faça login novamente' }
+    }   
+    */
     const itemCarrinho = req.body as ItemCarrinhoDto;
     try {
         if (req.session.uid){
@@ -19,6 +34,13 @@ const addItemCarrinho = async (req: Request, res: Response) => {
 }
 
 const efetuarCarrinho = async (req: Request, res: Response) => {
+    /*
+    #swagger.summary = 'Efetua compra do carrinho.'
+    #swagger.responses[200] = {
+        schema: { msg: 'Compra efeituada com sucesso!' }
+    }
+   
+    */
     try {
 
         if (req.session.uid && req.session.carrinho){

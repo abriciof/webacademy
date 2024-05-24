@@ -1,5 +1,10 @@
 {
   "dependencies": {
-    "envalid": "^8.0.0"
+    "envalid": "^8.0.0",
+    "swagger-ui-express": "^5.0.0"
+  },
+  "devDependencies": {
+    "@types/swagger-ui-express": "^4.1.6",
+    "swagger-autogen": "^2.23.7"
   }
 }

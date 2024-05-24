@@ -5,6 +5,9 @@ import { checkEmailIsAvaliable, createUsuario, listUsuarios, readUsuario, update
 
 
 const index  = async (req: Request, res: Response) => {
+     /*
+    #swagger.summary = 'Recupera os dados de todos os usuários da base'
+    */
     const skip = req.query.skip ? parseInt(req.query.skip?.toString()) : undefined;
     const take = req.query.take ? parseInt(req.query.take?.toString()) : undefined;
     try {
@@ -16,6 +19,13 @@ const index  = async (req: Request, res: Response) => {
 };
 
 const create = async (req: Request, res: Response) => {
+    /*
+    #swagger.summary = 'Adiciona um novo usuário na base.'
+    #swagger.parameters['body'] = {
+        in: 'body',
+        schema: { $ref: '#/definitions/CreateUsuarioDto' }
+    }
+    */
     const usuario = req.body as CreateUsuarioDto;
     try {
         if (await checkEmailIsAvaliable(usuario.email)){
@@ -30,6 +40,13 @@ const create = async (req: Request, res: Response) => {
 };
 
 const read = async (req: Request, res: Response) => {
+    /*
+    #swagger.summary = 'Recupera dados de um usuário específico.'
+    #swagger.parameters['id'] = { description: 'ID do usuário' }
+    #swagger.responses[200] = {
+        schema: { $ref: '#/definitions/CreateUsuarioDto' }
+    }
+    */
     const { id } = req.params;
     try {
         const usuario = await readUsuario(id);
@@ -43,6 +60,14 @@ const read = async (req: Request, res: Response) => {
 };
 
 const update = async (req: Request, res: Response) => {
+    /*
+    #swagger.summary = 'Atualiza dados de um usuário específico.'
+    #swagger.parameters['id'] = { description: 'ID do usuário' }
+    #swagger.parameters['body'] = {
+        in: 'body',
+        schema: { $ref: '#/definitions/CreateUsuarioDto' }
+    }
+    */
     const { id } = req.params;
     const usuario = req.body as UpdateUsuarioDto;
     try {
@@ -59,6 +84,10 @@ const update = async (req: Request, res: Response) => {
 };
 
 const remove = async (req: Request, res: Response) => {
+    /*
+    #swagger.summary = 'Remove um usuário da base.'
+    #swagger.parameters['id'] = { description: 'ID do usuário' }
+    */
     const { id } = req.params;
     console.log(id);
     try {

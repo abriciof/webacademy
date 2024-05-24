@@ -5,6 +5,9 @@ import { CreateProdutoDto, UpdateProdutoDto } from "./produto.types";
 
 
 const index  = async (req: Request, res: Response) => {
+    /*
+    #swagger.summary = 'Recupera os dados de todos os produtos da base'
+    */
     const skip = req.query.skip ? parseInt(req.query.skip?.toString()) : undefined;
     const take = req.query.take ? parseInt(req.query.take?.toString()) : undefined;
     try {
@@ -16,6 +19,16 @@ const index  = async (req: Request, res: Response) => {
 };
 
 const create = async (req: Request, res: Response) => {
+    /*
+    #swagger.summary = 'Adiciona um novo produto na base.'
+    #swagger.parameters['body'] = {
+        in: 'body',
+        schema: { $ref: '#/definitions/CreateProdutoDto' }
+    }
+    #swagger.responses[200] = {
+        schema: { $ref: '#/definitions/Produto' }
+    } 
+    */
     const produto = req.body as CreateProdutoDto;
     try {
         if (await checkNomeIsAvaliable){
@@ -30,6 +43,13 @@ const create = async (req: Request, res: Response) => {
 };
 
 const read = async (req: Request, res: Response) => {
+    /*
+    #swagger.summary = 'Recupera dados de um produto específico.'
+    #swagger.parameters['id'] = { description: 'ID do produto' }
+    #swagger.responses[200] = {
+        schema: { $ref: '#/definitions/Produto' }
+    }
+    */
     const { id } = req.params;
     try {
         const produto = await readProduto(id);
@@ -43,6 +63,14 @@ const read = async (req: Request, res: Response) => {
 };
 
 const update = async (req: Request, res: Response) => {
+    /*
+    #swagger.summary = 'Atualiza dados um produto específico.'
+    #swagger.parameters['id'] = { description: 'ID do produto' }
+    #swagger.parameters['body'] = {
+        in: 'body',
+        schema: { $ref: '#/definitions/CreateProdutoDto' }
+    }
+    */
     const { id } = req.params;
     const produto = req.body as UpdateProdutoDto;
     try {
@@ -59,6 +87,10 @@ const update = async (req: Request, res: Response) => {
 };
 
 const remove = async (req: Request, res: Response) => {
+     /*
+    #swagger.summary = 'Remove um produto da base.'
+    #swagger.parameters['id'] = { description: 'ID do produto' }
+    */
     const { id } = req.params;
     console.log(id);
     try {
